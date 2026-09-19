@@ -1,0 +1,72 @@
+### R-Skript Lösungen
+
+```R
+#---1.---
+
+#-1.5.2-
+# 1.
+name <- c("Susi", "Tim", "Christine", "Mathias")
+job <- c(rep("Student(in)", 3), "angestellt")
+job <- factor(job, levels = c("Student(in)", "angestellt", "selbstständig"))
+figur <- c(rep("mollig", 2), "muskulös", "hager")
+figur <- ordered(figur, levels = c("hager", "dünn", "schlank", "normal", 
+                                   "mollig", "muskulös"))
+groesse <- c(1.97, 1.67, 1.9, 1.81)
+gewicht <- c(98L, 89L, 71L, 86L)
+trinkt <- c(TRUE, NA, TRUE, TRUE)
+
+# 2.
+Freunde <- data.frame(Name = name, Figur = figur, Groesse = groesse,
+                      Gewicht = gewicht, Trinkt = trinkt, Beruf = job,
+                      stringsAsFactors = FALSE)
+Freunde
+str(Freunde)
+
+#-1.5.5-
+# 1.
+X <- scan(text = "12 3 3 34 43 23 34 90")
+X
+# 2.
+Y <- scan(text = "A;quick;brown;fox;jumps;over;the;lazy;dog", sep = ";", what = "A")
+Y
+# 3.
+write.table(Freunde, file = "daten.csv", sep = ";", row.names = FALSE, 
+            col.names = FALSE)
+# 4.
+tab <- read.table(file = "daten.csv", sep = ";")
+head(tab)
+
+
+
+#---2.---
+noten <- c("Sehr Gut", "Gut", "Befriedigend", "Gut") # z. B. Noten von vier Schüler*innen
+noten <- factor(noten, levels = c("Sehr gut", "Gut", "Befriedigend", 
+                                    "Genügend", "Nicht genügend"))
+noten
+
+
+
+#---3.---
+schlange <- c("Stefan", "Hans", "Alissa", "Liam") 
+
+# a.
+(schlange <- c(schlange, "Björn"))
+
+# b.
+(schlange <- schlange[-1]) 
+
+# c.
+(schlange <- c("Alma", schlange)) 
+
+# d.
+(schlange <- schlange[-length(schlange)])
+
+# e.
+which(schlange == "Hans")
+
+# f.
+(idx <- which(schlange == "Alissa"))
+(schlange <- schlange[-idx])
+
+```
+

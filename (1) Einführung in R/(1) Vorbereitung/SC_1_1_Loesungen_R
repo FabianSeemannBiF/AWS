@@ -1,0 +1,27 @@
+### R-Skript: Lösungen der Selbstcheck-Aufgaben
+
+```R
+#---1.---
+seq(0, -1.5, -0.1)
+rep(1:5, 5)
+rep(0:4, each = 5)
+rep(1:5, 5) + rep(0:4, each = 5)
+
+#---2.---
+# a)
+ALTER <- c(10, 12, 44, 78, 20, 1)
+# b)
+GEBURTSJAHR <- 2023 - ALTER
+GEBURTSJAHR
+# c)
+mean(ALTER)
+# d)
+idx <- seq(1, length(ALTER)/2) * 2
+ALTER[idx]
+# e)
+idx2 <- seq(1, length(ALTER)/3) * 3
+ALTER <- ALTER[-idx2]
+ALTER
+
+```
+

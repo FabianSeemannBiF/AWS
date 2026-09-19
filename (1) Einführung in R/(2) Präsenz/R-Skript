@@ -1,0 +1,280 @@
+### R-Skript
+
+```R
+#---Ausdrücke---
+
+cat("Hello, World!")
+
+1 + 1
+
+## ?cat
+
+#---Variablen---
+## Eine ganze Zahl
+x <- 2
+x = 2
+x
+
+## Ein String
+x = "Hugo"
+x 
+## Ausgabe einer Funktion
+cat
+
+ls()
+rm(x, y)
+x
+
+a = b = 1
+save(a, b, file = "myvars.rda")
+rm(a, b)
+load("myvars.rda")
+a
+b
+
+save.image() # Speichert alles in das File .RData
+rm(a, b)
+load(".RData")
+
+#---Vektoren---
+x = c(1, 2, 3)
+x
+y = c(99, x, 99)
+y
+
+z = 1 : 50
+z
+z = 5 : 1
+z
+
+y[2]
+
+y[2 : 4] ## extrahiert die Elemente 2 bis 4
+ind = c(1, 3, 5)
+y[ind] ## Extahiert das 1., 3. und 5. Element
+
+y[1] = 99
+y
+y[c(1 : 3, 5)] = c(100, 200, 300, 400)
+y
+
+x = c(1, 2, 3)
+x[-2] ## liefert temporaer einen Vektor ohne 2. Element zurueck
+x ## Original unveraendert!
+x = x[-2] ## Dauerhaft loeschen
+x
+
+alter = c(Susi = 10, Hugo = 20)
+alter
+alter["Susi"]
+
+x = 1:5
+1 + x
+2 * x
+log(x)
+
+quadrat = function(x) x * x
+quadrat(x)
+
+seq(from = 10, to = 20, by = 2) ## Allgemeine Sequenzen
+rep(10, 3) ## Wiederholungen
+rep(1 : 3, 2)
+rev(1 : 3) ## Umkehrung
+length(1 : 5) ## Anzahl Elemente
+sum(1 : 5) ## Summe
+prod(c(2, 5, 9)) ## Produkt
+
+ee <- 10:1
+ee == 3 # Element von ee weist den Wert 3 auf?
+
+ee > 3  # Element ist größer als 3?
+ee <= 3 # Element ist kleiner gleich 3?
+ee > 2 & ee < 8 # Element ist größer als 3 und kleiner als 8?
+ee < 2 | ee > 8 # Element ist kleiner als 2 oder größer als 8?
+
+which(ee <= 3)
+
+any(ee == 3)
+all(ee == 3)
+
+ee
+sample(ee, 3)
+sample(ee, 3)
+sample(ee, 3)
+
+set.seed(1)
+sample(ee, 3)
+set.seed(1)
+sample(ee, 3)
+
+#---Kategoriale Merkmale---
+raucht = c(TRUE, FALSE, TRUE, FALSE)
+raucht
+
+sum(raucht)
+
+mean(raucht)
+
+name = c("Tim", "Susi", "Horst", "Walter")
+name
+
+nchar(name) # Zeichenanzahl
+substring(name, 1, 3) # Teilstrings
+toupper(name) # Grossbuchstaben
+
+paste("Hallo", "Welt") # Zwei Vektoren zusammenfuegen
+paste("Hallo", name) # Zusammenfuegen, vektorisiert
+paste(name, collapse = " und ") # Mehrere Elemente zu einem zusammenfuegen
+
+grep("W.*r", name) # Suche mit regular expressions, liefert Indexvektor
+gsub("Susi", "Susanne", name) # Ersetzen von Strings
+
+g = c("M", "W", "M", "W")
+geschlecht = as.factor(g)
+geschlecht
+
+levels(geschlecht)
+levels(geschlecht) = c("Maennlich", "Weiblich")
+geschlecht
+
+geschlecht = factor(g, levels = c("M", "W"), 
+                       labels = c("Maennlich", "Weiblich"))
+geschlecht
+
+fig = c("mollig", "duenn", "normal", "hager")
+figur = ordered(fig, levels = c("hager", "duenn", "normal", "mollig"))
+figur
+
+levels(figur)
+levels(figur)[1:2] = "schlank"
+levels(figur)
+figur
+
+#---Metrische Merkmale---
+alter = c(20, 30, 40, 50)
+alter = seq(from = 20, to = 50, by = 10) ## Alternative
+alter
+
+groesse = c(1.65, 1.75, 1.85, 1.95)
+groesse
+
+groesse2 = cut(groesse,
+               breaks = c(1.5, 1.7, 1.8, 2.1),
+               labels = c("klein", "mittel", "gross"),
+               ordered = TRUE)
+groesse2
+
+#---Fehlende Werte---
+piercings = c(1, NA, 0, 2)
+piercings
+
+sum(piercings)
+sum(piercings, na.rm = TRUE) ## NAs vor der Berechnung entfernen
+
+#---Data Frames---
+## daten = edit(data.frame())
+
+freunde = data.frame(name, alter, raucht, geschlecht, figur, groesse, piercings,
+                     stringsAsFactors = FALSE)
+freunde
+
+freunde2 = data.frame(Name = name, Alter = alter, Raucht = raucht, 
+                      Geschlecht = geschlecht, Figur = figur, 
+		      Groesse = groesse, Piercings = piercings)
+freunde2
+
+colnames(freunde2)
+colnames(freunde2)[1] = "NAME"
+freunde2
+
+freunde = cbind(freunde, groesse2)
+freunde
+
+## fix(freunde)
+
+head(freunde, 3) # default: 6 Zeilen
+
+nrow(freunde) # Anzahl Zeilen
+ncol(freunde) # Anzahl Spalten
+dim(freunde) # Beides
+
+str(freunde)
+
+summary(freunde)
+
+freunde[1,] # erste Zeile (ein data frame)
+freunde[,1] # erste Spalte (ein character-Vektor)
+freunde[2,2] # Element an der zweiten Zeile und Spalte
+freunde[2:3,] # Auswahl von Zeilen 2 und 3
+
+freunde[,"name"]
+freunde$name # kuerzeste Form
+
+freunde = freunde[,c(1,2,3,4,5,6,8,7)]
+freunde
+
+subset(freunde, alter > 25 & raucht == TRUE)
+subset(freunde, raucht, c(name, alter)) ## == TRUE kann weggelassen werden
+subset(freunde, , alter)
+
+ok = complete.cases(freunde)
+sum(ok) # Anzahl vollstaendiger Beobachtungen
+sum(!ok) # Anzahl unvollstaendiger Beobachtungen
+
+freunde_complete = subset(freunde, ok) # alle vollstaendigen extrahieren
+freunde_complete
+subset(freunde, !ok)
+
+## Die meisten Piercings nach Geschlecht
+aggregate(piercings ~ geschlecht, data = freunde, FUN = max)
+
+## durchschnittliche Groesse nach Figur
+aggregate(groesse ~ figur, freunde, mean)
+
+## durchschnittliche Groesse nach Figur und Geschlecht
+aggregate(groesse ~ figur + geschlecht, freunde, mean)
+
+## Durchschnitt von Groesse und Alter nach Geschlecht
+aggregate(cbind(groesse, alter) ~ geschlecht, freunde, mean)
+
+x = (1 : 20) / 10
+write(x, file = "x.txt", sep = ",")
+
+cat(readLines("x.txt"), sep = "\n")
+
+write(as.character(geschlecht), file = "geschlecht.txt")
+
+getwd()
+
+dir(pattern = "*.txt")
+
+## path = file.choose()
+path = file.path(getwd(), "x.txt")
+
+## file.show(path)
+
+my_x = scan(path, sep = ",", dec = ".")
+my_x
+
+scan("geschlecht.txt")
+scan("geschlecht.txt", what = "A")
+
+## x = scan()
+## 1: 44
+## 2: 22 33
+## 4:
+## Read 3 items
+
+write.table(freunde, sep = ",", row.names = FALSE)
+
+write.table(freunde, file = "freunde.csv", sep = ",", row.names = FALSE)
+
+my_freunde = read.table("freunde.csv", header = TRUE, sep = ",", dec = ".")
+my_freunde
+
+my_freunde = read.table("freunde.csv", as.is = 1, header = TRUE, sep = ",")
+str(my_freunde)
+
+quadrat = function(x) x * x
+```
+
